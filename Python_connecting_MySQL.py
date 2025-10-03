@@ -45,9 +45,9 @@ def get_sql_type(dtype):
 for csv_file, table_name in csv_files:
     file_path = os.path.join(folder_path, csv_file)
 
-    # ✅ Check if file exists before proceeding
+    # Check if file exists before proceeding
     if not os.path.exists(file_path):
-        print(f"⚠️ Warning: {csv_file} not found. Skipping...")
+        print(f"Warning: {csv_file} not found. Skipping...")
         continue
 
     # Read the CSV file into a pandas DataFrame
@@ -71,7 +71,7 @@ for csv_file, table_name in csv_files:
     # Prepare SQL insert statement
     sql = f"INSERT INTO `{table_name}` ({', '.join(['`' + col + '`' for col in df.columns])}) VALUES ({', '.join(['%s'] * len(df.columns))})"
 
-    # ✅ Insert in batches to prevent large query overload
+    # Insert in batches to prevent large query overload
     batch_size = 1000
     for i in range(0, len(df), batch_size):
         chunk = df.iloc[i : i + batch_size]
@@ -83,3 +83,4 @@ for csv_file, table_name in csv_files:
 
 # Close the connection
 conn.close()
+
